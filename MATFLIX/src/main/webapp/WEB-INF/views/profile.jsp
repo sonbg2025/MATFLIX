@@ -1,4 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!------------------------------------여기 추가함---------------------------------------->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.tab_btn[data-tab="account_settings"]').on('click', function() {
+      window.location.href = '/mem_update';
+    });
+  });
+</script>
+<!------------------------------------여기 추가함---------------------------------------->
 
 <div class="mypage_container">
     <!-- 프로필 섹션 -->

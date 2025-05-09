@@ -39,6 +39,7 @@ public class TeamController {
 	public String profile(HttpSession session, Model model) {
 		TeamDTO user = (TeamDTO) session.getAttribute("user");
 		if (user == null) {
+			log.info("@#user => " + user);
 			return "redirect:/"; // 로그인 안 되어 있으면 로그인 페이지로
 		}
 
@@ -76,16 +77,16 @@ public class TeamController {
 		return check_ok ? "available" : "unavailable";
 	}
 
-	// 마이페이지 내에 계정설정 확인
+//	// 마이페이지 내에 계정설정 확인
 	@RequestMapping("/mem_update")
-	@ResponseBody
 	public String mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
+		TeamDTO user = (TeamDTO) session.getAttribute("user");
 		System.out.println(param);
 		service.update_ok(param);
 		System.out.println("test1");
 		session.invalidate();
 		System.out.println("test2");
-		return "ok";
+		return "mem_update";
 	}
 
 	// 회원가입
@@ -107,14 +108,16 @@ public class TeamController {
 		log.info("@# mf_id 입니다 : " + mf_id);
 		log.info("@# mf_pw 입니다 : " + mf_pw);
 		int result = service.login(mf_id, mf_pw);
+		log.info("@# result =>" + result);
 		if (result == 1) {
 			TeamDTO dto = service.find_list(mf_id);
 			HttpSession session = request.getSession();
 			session.setAttribute("user", dto);
+			log.info("@# session => " + session.getAttribute("user"));
 			return "main"; // 로그인 성공 시 이동할 페이지
 		} else {
 			model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-			return "main"; // 로그인 실패 시 다시 로그인 페이지로
+			return "login"; // 로그인 실패 시 다시 로그인 페이지로
 		}
 	}
 
@@ -151,7 +154,6 @@ public class TeamController {
 	public String write(@RequestParam HashMap<String, String> param) {
 		service.recruit(param);
 
-//		return "redirect:/login";
 		return "login";
 	}
 
@@ -175,21 +177,6 @@ public class TeamController {
 		}
 		return exists ? "unavailable" : "available";
 	}
-
-	// 통합 코드
-//	@PostMapping("/recruit_result_ok")
-//	public String recruitOrCheck(@RequestParam HashMap<String, String> param, Model model) {
-//		String mf_id = param.get("mf_id"); // "check" 또는 "recruit"
-//
-//		ArrayList<TeamDTO> list = service.list();
-//		for (TeamDTO teamDTO : list) {
-//			if (teamDTO.getMf_id().equals(mf_id)) {
-//				return "redirect:/recruit";
-//			}
-//		}
-//
-//		return "redirect:/login";
-//	}
 
 	// 마이페이지 내에 계정설정 확인
 	@RequestMapping("/nickname")

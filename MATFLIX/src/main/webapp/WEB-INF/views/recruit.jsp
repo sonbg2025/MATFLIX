@@ -125,7 +125,7 @@ document.getElementById("togglePwChk").addEventListener("click", function() {
 // 회원가입 취소
       $(document).on("click", ".header_logo, .logo, #home, .btn_cancel", function () {
          $("html, body").animate({ scrollTop: 0 }, 0);
-         $(".content").load("${pageContext.request.contextPath}/front/content_main", function(response, status, xhr) {
+         $(".content").load("${pageContext.request.contextPath}/main", function(response, status, xhr) {
             if (status === "error") {
                alert("홈 페이지 로딩 중 오류가 발생했습니다: " + xhr.status);
             } else {
