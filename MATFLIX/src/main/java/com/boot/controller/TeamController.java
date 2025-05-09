@@ -2,6 +2,7 @@ package com.boot.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ public class TeamController {
 //		System.out.println(mf_id);
 //		return "profile";
 //	}
+
 	@RequestMapping("/profile")
 	public String profile(HttpSession session, Model model) {
 		TeamDTO user = (TeamDTO) session.getAttribute("user");
@@ -78,15 +80,26 @@ public class TeamController {
 	}
 
 //	// 마이페이지 내에 계정설정 확인
+//	@RequestMapping("/mem_update")
+//	public String mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
+//		System.out.println(param);
+//		service.update_ok(param);
+//		System.out.println("test1");
+//		session.invalidate();
+//		System.out.println("test2");
+//		return "redirect:/login";
+//	}
 	@RequestMapping("/mem_update")
-	public String mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
-		TeamDTO user = (TeamDTO) session.getAttribute("user");
+	@ResponseBody
+	public Map<String, Object> mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
 		System.out.println(param);
 		service.update_ok(param);
-		System.out.println("test1");
-		session.invalidate();
-		System.out.println("test2");
-		return "mem_update";
+		session.invalidate(); // 로그아웃 처리
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", "success");
+		result.put("redirect", "/login");
+		return result;
 	}
 
 	// 회원가입
@@ -190,4 +203,10 @@ public class TeamController {
 		return "redirect:profile";
 	}
 
+	// 계정 설정 클릭시
+	@RequestMapping("/account")
+	public String account() {
+
+		return "mem_update";
+	}
 }

@@ -4,7 +4,7 @@
 <script>
   $(document).ready(function() {
     $('.tab_btn[data-tab="account_settings"]').on('click', function() {
-      window.location.href = '/mem_update';
+      window.location.href = '/account';
     });
   });
 </script>
