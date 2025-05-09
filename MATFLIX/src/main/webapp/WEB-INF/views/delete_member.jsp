@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 삭제</title>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	function check_pw() {
 		// 입력된 비밀번호 값 가져오기

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 
 <script>
 $(document).ready(function() {
@@ -33,6 +35,18 @@ $(document).ready(function() {
 // 		}
 // 	});
 // }
+
+function kakaoLogin() {
+$.ajax({
+ url:'/login/getKakaoAuthUrl',
+ type:'post',
+ async: false,
+ dataType: 'text',
+ success: function (res) {
+   location.href = res;
+ }
+});
+}
 </script>
 
 <div class="content">
@@ -78,10 +92,12 @@ $(document).ready(function() {
             
             <div class="social_login">
                 <p>소셜 계정으로 로그인</p>
+				<div class="kakao-btn" onclick="kakaoLogin()">
+				    <a th:href="${location}">
+				        <img src="${pageContext.request.contextPath}/resources/image/kakao_login_medium_narrow.png" >
+				    </a>
+				</div>
                 <div class="social_buttons">
-                    <a href="#" class="social_button kakao">
-                        <i class="fas fa-comment"></i> 카카오 로그인
-                    </a>
                     <a href="#" class="social_button naver">
                         <i class="fas fa-n"></i> 네이버 로그인
                     </a>

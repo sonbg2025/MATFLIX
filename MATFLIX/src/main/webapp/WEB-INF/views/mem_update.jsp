@@ -58,7 +58,6 @@
 </script>
 </head>
 <body>
-	<%= user %>
 	<h2>회원정보 수정</h2>
 	<form id="user_update">
 		<input type="hidden" name="mf_id" value="<%= user.getMf_id() %>">
@@ -123,5 +122,6 @@
 			<input type="button" onclick="fn_submit()" value="수정">
 			<button type="button" onclick="location.href='/main'">취소</button>
 	</form>
+	<input type="button" onclick="location.href='/delete_member'" value="회원 탈퇴">
 </body>
 </html>

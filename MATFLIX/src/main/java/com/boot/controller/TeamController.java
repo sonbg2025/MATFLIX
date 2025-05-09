@@ -28,15 +28,6 @@ public class TeamController {
 	@Autowired
 	private TeamService service;
 
-	// 마이페이지
-//	@RequestMapping("/profile")
-//	public String profile(@RequestParam("mf_id") String mf_id, Model model) {
-//		TeamDTO dto = service.find_list(mf_id);
-//		model.addAttribute("dto", dto);
-//		System.out.println(mf_id);
-//		return "profile";
-//	}
-
 	@RequestMapping("/profile")
 	public String profile(HttpSession session, Model model) {
 		TeamDTO user = (TeamDTO) session.getAttribute("user");
@@ -50,10 +41,37 @@ public class TeamController {
 		return "profile";
 	}
 
+//	@RequestMapping("/delete_member")
+//	public String delete_member(@RequestParam("mf_id") String mf_id, Model model) {
+//		model.addAttribute("mf_id", mf_id);
+//		return "delete_member";
+//	}
+
+	// 탈퇴 페이지 이동
 	@RequestMapping("/delete_member")
-	public String delete_member(@RequestParam("mf_id") String mf_id, Model model) {
-		model.addAttribute("mf_id", mf_id);
+	public String delete_member(HttpSession session, Model model) {
+		TeamDTO user = (TeamDTO) session.getAttribute("user");
+		if (user == null) {
+			return "redirect:/";
+		}
+		model.addAttribute("mf_id", user.getMf_id());
 		return "delete_member";
+	}
+
+	// 탈퇴 처리 (비밀번호 확인 포함)
+	@PostMapping("/delete_member_check")
+	@ResponseBody
+	public String delete_member_check(@RequestParam("mf_id") String mf_id, @RequestParam("mf_pw") String mf_pw,
+			HttpSession session) {
+
+		TeamDTO dto = service.find_list(mf_id); // 기존 비밀번호 확인용
+		if (dto != null && dto.getMf_pw().equals(mf_pw)) {
+			service.delete_ok(mf_id); // delete_ok에 바로 mf_id 전달
+			session.invalidate(); // 세션 종료
+			return "available";
+		} else {
+			return "unavailable";
+		}
 	}
 
 	// 계정설정 비밀번호 확인 이동
@@ -79,16 +97,6 @@ public class TeamController {
 		return check_ok ? "available" : "unavailable";
 	}
 
-//	// 마이페이지 내에 계정설정 확인
-//	@RequestMapping("/mem_update")
-//	public String mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
-//		System.out.println(param);
-//		service.update_ok(param);
-//		System.out.println("test1");
-//		session.invalidate();
-//		System.out.println("test2");
-//		return "redirect:/login";
-//	}
 	@RequestMapping("/mem_update")
 	@ResponseBody
 	public Map<String, Object> mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
@@ -133,24 +141,6 @@ public class TeamController {
 			return "login"; // 로그인 실패 시 다시 로그인 페이지로
 		}
 	}
-
-//	@RequestMapping("/main_membership")
-//	@ResponseBody
-//	public String login_ok(@RequestParam("mf_id") String mf_id, @RequestParam("mf_pw") String mf_pw, Model model,
-//			HttpServletRequest request) {
-//		boolean login_ok = false;
-//
-//		int result = service.login(mf_id, mf_pw);
-//		if (result == 1) {
-//			model.addAttribute("mf_id", mf_id);
-//			System.out.println(mf_id);
-//			HttpSession session = request.getSession();
-//			TeamDTO dto = service.find_list(mf_id);
-//			session.setAttribute("user", dto);
-//			login_ok = true;
-//		}
-//		return login_ok ? "available" : "unavailable";
-//	}
 
 	// 로그아웃
 	@RequestMapping("/log_out")
@@ -209,4 +199,26 @@ public class TeamController {
 
 		return "mem_update";
 	}
+
+	// 카카오 로그인 기능이 처리되는 페이지
+//	@RequestMapping(value = "/memberLoginForm/getKakaoAuthUrl")
+//	public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
+//
+//		String reqUrl = "https://kauth.kakao.com/oauth/authorize?client_id=2920c6e2df9de128fb61e072bc2721aa"
+//				+ "&redirect_uri=http://localhost:8485/oauth&response_type=code";
+//
+//		return reqUrl;
+//	}
+//
+//	@RequestMapping(value = "/auth_kakao")
+//	public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpSession session,
+//			RedirectAttributes rttr) throws Exception {
+//
+//		log.info("#######" + code);
+//		String access_Token = loginServ.getAccessToken(code);
+//		String view = loginServ.getuserinfo(access_Token, session, rttr);
+//
+//		return view;
+//	}
+
 }
