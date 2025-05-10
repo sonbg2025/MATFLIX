@@ -1,3 +1,20 @@
+/*==========================================================
+* 파일명     : TeamController.java
+* 작성자     : 손병관
+* 작성일자   : 2025-05-09
+* 설명       : 이 클래스는 [로그인, 회원가입, 회원 정보 수정, 닉네임 변경, 회원 삭제까지 구현한 controller 입니다.]
+
+
+* 수정 이력 :
+* 날짜         수정자       내용
+* --------   ----------   ------------------------- 
+* 2025-05-07   손병관       최초 생성
+* 2025-05-07   손병관       로그인 및 회원가입 구현
+* 2025-05-08   손병관       마이페이지 동작
+* 2025-05-08   손병관       회원 정보 수정 구현
+* 2025-05-09   손병관       회원 탈퇴 및 닉네임 변경 구현
+============================================================*/
+
 package com.boot.controller;
 
 import java.util.ArrayList;
@@ -97,6 +114,7 @@ public class TeamController {
 		return check_ok ? "available" : "unavailable";
 	}
 
+	// 회원정보 수정 후 자동 로그아웃
 	@RequestMapping("/mem_update")
 	@ResponseBody
 	public Map<String, Object> mem_update(@RequestParam HashMap<String, String> param, HttpSession session) {
@@ -181,16 +199,34 @@ public class TeamController {
 		return exists ? "unavailable" : "available";
 	}
 
-	// 마이페이지 내에 계정설정 확인
+	// 닉네임 변경 폼 이동용
+	@RequestMapping("/nickname_form")
+	public String nickname_form(@RequestParam("mf_id") String mf_id, Model model) {
+		model.addAttribute("mf_id", mf_id);
+		return "nickname"; // nickname.jsp로 이동
+	}
+
+	// 닉네임 변경
+//	@RequestMapping("/nickname")
+//	public String nickname(@RequestParam("mf_nickname") String mf_nickname, @RequestParam("mf_id") String mf_id,
+//			Model model, HttpServletRequest request) {
+//		System.out.println("nickname  test1");
+//		service.nickname(mf_nickname, mf_id);
+//		System.out.println("nickname  test2");
+//		model.addAttribute("mf_id", mf_id);
+//
+//		return "redirect:profile";
+//	}
 	@RequestMapping("/nickname")
 	public String nickname(@RequestParam("mf_nickname") String mf_nickname, @RequestParam("mf_id") String mf_id,
-			Model model, HttpServletRequest request) {
-		System.out.println("nickname  test1");
-		service.nickname(mf_nickname, mf_id);
-		System.out.println("nickname  test2");
-		model.addAttribute("mf_id", mf_id);
+			Model model, HttpSession session) {
+		service.nickname(mf_nickname, mf_id); // 닉네임 변경 처리
 
-		return "redirect:profile";
+		// 변경된 사용자 정보 다시 가져와서 세션 갱신
+		TeamDTO updatedUser = service.find_list(mf_id);
+		session.setAttribute("user", updatedUser); // 세션 갱신
+
+		return "redirect:profile"; // 리디렉션
 	}
 
 	// 계정 설정 클릭시
@@ -199,26 +235,5 @@ public class TeamController {
 
 		return "mem_update";
 	}
-
-	// 카카오 로그인 기능이 처리되는 페이지
-//	@RequestMapping(value = "/memberLoginForm/getKakaoAuthUrl")
-//	public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request) throws Exception {
-//
-//		String reqUrl = "https://kauth.kakao.com/oauth/authorize?client_id=2920c6e2df9de128fb61e072bc2721aa"
-//				+ "&redirect_uri=http://localhost:8485/oauth&response_type=code";
-//
-//		return reqUrl;
-//	}
-//
-//	@RequestMapping(value = "/auth_kakao")
-//	public String oauthKakao(@RequestParam(value = "code", required = false) String code, HttpSession session,
-//			RedirectAttributes rttr) throws Exception {
-//
-//		log.info("#######" + code);
-//		String access_Token = loginServ.getAccessToken(code);
-//		String view = loginServ.getuserinfo(access_Token, session, rttr);
-//
-//		return view;
-//	}
 
 }

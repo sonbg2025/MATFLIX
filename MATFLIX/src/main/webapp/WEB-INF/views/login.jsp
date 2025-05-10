@@ -92,10 +92,10 @@ $.ajax({
             
             <div class="social_login">
                 <p>소셜 계정으로 로그인</p>
-				<div class="kakao-btn" onclick="kakaoLogin()">
-				    <a th:href="${location}">
-				        <img src="${pageContext.request.contextPath}/resources/image/kakao_login_medium_narrow.png" >
-				    </a>
+					<a href="<c:url value='/oauth2/authorization/kakao' />">
+					    <img src="${pageContext.request.contextPath}/resources/image/kakao_login_medium_narrow.png" alt="카카오 로그인">
+					</a>
+
 				</div>
                 <div class="social_buttons">
                     <a href="#" class="social_button naver">
