@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.dao.NotificationDAO">
+
+	<!-- 알림 추가 -->
+	<insert id="add_notification">
+		INSERT INTO notifications (follower_id, following_id, post_id)
+		VALUES (#{follower_id},#{following_id},#{post_id})
+	</insert>
+
+	<!-- 게시글 보기 -->
+    <select id="notification_list" resultType="com.boot.dto.NotificationDTO">
+    	select following_id
+    		 , post_id
+    		 , created_at
+    	  from notifications
+    	 where follower_id = #{follower_id}
+    </select>
+    
+</mapper>
