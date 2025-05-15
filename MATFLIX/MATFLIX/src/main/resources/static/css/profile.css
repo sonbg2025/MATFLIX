@@ -1,0 +1,212 @@
+/* 프로필 페이지 스타일 */
+.mypage_container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.profile_section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.profile_header {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.profile_image_large {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--primary-color);
+}
+
+.profile_image_large img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit_profile_image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.profile_info_container {
+  flex: 1;
+}
+
+.profile_info h2 {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.edit_profile_btn {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit_profile_btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.user_bio {
+  color: var(--light-text);
+  margin-bottom: 15px;
+}
+
+.profile_stats {
+  display: flex;
+  gap: 30px;
+}
+
+.stat_item {
+  text-align: center;
+}
+
+.stat_number {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-color);
+  display: block;
+}
+
+.stat_label {
+  font-size: 14px;
+  color: var(--light-text);
+}
+
+.mypage_tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.mypage_tabs a,
+.mypage_tabs button {
+  padding: 10px 15px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.mypage_tabs a:hover,
+.mypage_tabs button:hover {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--primary-color);
+}
+
+.mypage_tabs a.active,
+.mypage_tabs button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* 게시글 목록 */
+.profile_board_list {
+  display: grid;
+  gap: 15px;
+}
+
+.profile_board_item {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 15px;
+  transition: var(--transition);
+}
+
+.profile_board_item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile_board_title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.profile_board_title a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.profile_board_title a:hover {
+  color: var(--primary-color);
+}
+
+.profile_board_stats {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: var(--light-text);
+}
+
+.profile_board_date {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--light-text);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .profile_header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile_info h2 {
+    justify-content: center;
+  }
+  
+  .profile_stats {
+    justify-content: center;
+  }
+  
+  .mypage_tabs {
+    overflow-x: auto;
+    padding-bottom: 15px;
+  }
+  
+  .mypage_tabs a,
+  .mypage_tabs button {
+    white-space: nowrap;
+  }
+}

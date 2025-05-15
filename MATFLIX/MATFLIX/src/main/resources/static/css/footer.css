@@ -1,0 +1,102 @@
+/* 푸터 스타일 */
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 0 20px;
+}
+
+.footer_content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer_logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer_logo img {
+  width: 50px;
+  height: auto;
+}
+
+.footer_logo h3 {
+  color: white;
+  font-size: 24px;
+  margin: 0;
+}
+
+.footer_links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer_section h4 {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+.footer_section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer_section li {
+  margin-bottom: 10px;
+}
+
+.footer_section a {
+  color: #ccc;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer_section a:hover {
+  color: white;
+}
+
+.social_icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social_icons a {
+  color: #ccc;
+  font-size: 20px;
+  transition: var(--transition);
+}
+
+.social_icons a:hover {
+  color: white;
+}
+
+.footer_bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer_bottom p {
+  color: #999;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .footer_content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .footer_links {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
